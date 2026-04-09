@@ -5,7 +5,7 @@ from src.models.database import SessionLocal
 from src.schemas.task_schema import ErrorResponse, TaskCreateBody, TaskListResponse, TaskResponse, TaskUpdateBody
 from src.services.task_service import TaskNotFoundError, TaskService
 
-tasks_tag = Tag(name="tasks", description="To-Do task management")
+tasks_tag = Tag(name="tasks", description="Gerenciamento de tarefas To-Do")
 bp = APIBlueprint("tasks", __name__, url_prefix="/tasks")
 
 
@@ -13,10 +13,9 @@ class TaskPath(BaseModel):
     task_id: int
 
 
-@bp.get("", tags=[tasks_tag], responses={200: TaskListResponse})  # Permitir acesso sem barra final
 @bp.get("/", tags=[tasks_tag], responses={200: TaskListResponse})
 def list_tasks():
-    """Return all tasks."""
+    """Retorna todas as tarefas."""
     db = SessionLocal()
     try:
         service = TaskService(db)
@@ -26,10 +25,9 @@ def list_tasks():
         db.close()
 
 
-@bp.post("", tags=[tasks_tag], responses={201: TaskResponse, 422: ErrorResponse})  # Permitir acesso sem barra final
 @bp.post("/", tags=[tasks_tag], responses={201: TaskResponse, 422: ErrorResponse})
 def create_task(body: TaskCreateBody):
-    """Create a new task."""
+    """Cria uma nova tarefa."""
     db = SessionLocal()
     try:
         service = TaskService(db)
@@ -41,7 +39,7 @@ def create_task(body: TaskCreateBody):
 
 @bp.get("/<int:task_id>", tags=[tasks_tag], responses={200: TaskResponse, 404: ErrorResponse})
 def get_task(path: TaskPath):
-    """Return a single task by ID."""
+    """Retorna uma única tarefa pelo ID."""
     db = SessionLocal()
     try:
         service = TaskService(db)
@@ -55,7 +53,7 @@ def get_task(path: TaskPath):
 
 @bp.patch("/<int:task_id>", tags=[tasks_tag], responses={200: TaskResponse, 404: ErrorResponse})
 def update_task(path: TaskPath, body: TaskUpdateBody):
-    """Partially update a task (title, description, or completed status)."""
+    """Atualiza parcialmente uma tarefa (título, descrição ou status de conclusão)."""
     db = SessionLocal()
     try:
         service = TaskService(db)
@@ -74,7 +72,7 @@ def update_task(path: TaskPath, body: TaskUpdateBody):
 
 @bp.delete("/<int:task_id>", tags=[tasks_tag], responses={204: None, 404: ErrorResponse})
 def delete_task(path: TaskPath):
-    """Delete a task by ID."""
+    """Remove uma tarefa pelo ID."""
     db = SessionLocal()
     try:
         service = TaskService(db)

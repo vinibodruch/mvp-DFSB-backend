@@ -5,14 +5,14 @@ from pydantic import BaseModel, Field
 
 
 class TaskCreateBody(BaseModel):
-    title: str = Field(..., min_length=1, max_length=200, description="Task title")
-    description: Optional[str] = Field(None, max_length=1000, description="Optional task description")
+    title: str = Field(..., min_length=1, max_length=200, description="Título da tarefa")
+    description: Optional[str] = Field(None, max_length=1000, description="Descrição opcional da tarefa")
 
 
 class TaskUpdateBody(BaseModel):
-    title: Optional[str] = Field(None, min_length=1, max_length=200, description="New title")
-    description: Optional[str] = Field(None, max_length=1000, description="New description")
-    completed: Optional[bool] = Field(None, description="Completion status")
+    title: Optional[str] = Field(None, min_length=1, max_length=200, description="Novo título")
+    description: Optional[str] = Field(None, max_length=1000, description="Nova descrição")
+    completed: Optional[bool] = Field(None, description="Status de conclusão")
 
 
 class TaskResponse(BaseModel):
@@ -28,8 +28,8 @@ class TaskResponse(BaseModel):
 
 
 class TaskListResponse(BaseModel):
-    tasks: List[TaskResponse] = Field(..., description="List of tasks")
+    tasks: List[TaskResponse] = Field(..., description="Lista de tarefas")
 
 
 class ErrorResponse(BaseModel):
-    error: str = Field(..., description="Error message")
+    error: str = Field(..., description="Mensagem de erro")
